@@ -42,25 +42,39 @@ public class Principal {
         List<DadosEpisodio> dadosEpisodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream())
                 .collect(Collectors.toList());
+//
+//        System.out.println("\n Top 10 episódios");
+//        dadosEpisodios.stream()
+//                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+//                .peek(e -> System.out.println("Primeiro filtro(N/A) " + e))
+//                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+//                .peek(e -> System.out.println("Ordenação " + e))
+//                .limit(10)
+//                .peek(e -> System.out.println("Limite " + e))
+//                .map(e -> e.titulo().toUpperCase())
+//                .peek(e -> System.out.println("Mapeamento " + e))
+//                .forEach(System.out::println);
 
-        System.out.println("\n Top 10 episódios");
-        dadosEpisodios.stream()
-                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
-                .peek(e -> System.out.println("Primeiro filtro(N/A) " + e))
-                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
-                .peek(e -> System.out.println("Ordenação " + e))
-                .limit(10)
-                .peek(e -> System.out.println("Limite " + e))
-                .map(e -> e.titulo().toUpperCase())
-                .peek(e -> System.out.println("Mapeamento " + e))
-                .forEach(System.out::println);
-//        List<Episodio> episodios = temporadas.stream()
-//                .flatMap(t -> t.episodios().stream()
-//                    .map(e -> new Episodio(t.numero(), e))
-//                ).collect(Collectors.toList());
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                    .map(e -> new Episodio(t.numero(), e))
+                ).collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
+
+//        System.out.println("Digite um trecho do titulo do episódio: ");
+//        var trechoTitulo = leitura.nextLine();
+//        Optional<Episodio> episodioBuscado = episodios.stream()
+//                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+//                .findFirst();
 //
-//        episodios.forEach(System.out::println);
-//
+//        if (episodioBuscado.isPresent()){
+//            System.out.println("Episodio encontrado");
+//            System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
+//        } else {
+//            System.out.println("Episodio não encontrado");
+//        }
+
 //        System.out.println("A partir de que ano voce deseja ver os episódios? ");
 //        var ano = leitura.nextInt();
 //        leitura.nextLine();
@@ -75,5 +89,24 @@ public class Principal {
 //                                " Episódio: " + e.getNumeroEpisodio() +
 //                                " Data de lançamento: " + e.getDataLancamento().format(formatador)
 //                ));
+
+        Map<Integer, Double> avaliacoesPorTemporada = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada,
+                        Collectors.averagingDouble(Episodio::getAvaliacao)));
+
+        System.out.println(avaliacoesPorTemporada);
+
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvaliacao));
+
+        System.out.println("Quantidade de episódios: " + est.getCount());
+        System.out.println("Média: " + est.getAverage());
+        System.out.println("Melhor: " + est.getMax());
+        System.out.println("Pior: " + est.getMin());
+
+
+
     }
 }
