@@ -5,39 +5,37 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class Episodio {
-    private String titulo;
+
     private Integer temporada;
+    private String titulo;
     private Integer numeroEpisodio;
     private Double avaliacao;
     private LocalDate dataLancamento;
 
-    public Episodio(Integer temporada, DadosEpisodio dadosEpisodio) {
+    public Episodio(Integer numeroTemporada, DadosEpisodio dadosEpisodio){
+        this.temporada = numeroTemporada;
         this.titulo = dadosEpisodio.titulo();
-        this.temporada = temporada;
         this.numeroEpisodio = dadosEpisodio.numero();
 
         try {
             this.avaliacao = Double.valueOf(dadosEpisodio.avaliacao());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ex){
             this.avaliacao = 0.0;
         }
 
         try {
             this.dataLancamento = LocalDate.parse(dadosEpisodio.dataLancamento());
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException ex) {
             this.dataLancamento = null;
         }
-
-
     }
 
-    @Override
-    public String toString() {
-        return  "titulo='" + titulo + '\'' +
-                ", temporada=" + temporada +
-                ", numeroEpisodio=" + numeroEpisodio +
-                ", avaliacao=" + avaliacao +
-                ", dataLancamento=" + dataLancamento;
+    public Integer getTemporada() {
+        return temporada;
+    }
+
+    public void setTemporada(Integer temporada) {
+        this.temporada = temporada;
     }
 
     public String getTitulo() {
@@ -48,12 +46,12 @@ public class Episodio {
         this.titulo = titulo;
     }
 
-    public Integer getTemporada() {
-        return temporada;
+    public Integer getNumeroEpisodio() {
+        return numeroEpisodio;
     }
 
-    public void setTemporada(Integer temporada) {
-        this.temporada = temporada;
+    public void setNumeroEpisodio(Integer numeroEpisodio) {
+        this.numeroEpisodio = numeroEpisodio;
     }
 
     public Double getAvaliacao() {
@@ -72,11 +70,11 @@ public class Episodio {
         this.dataLancamento = dataLancamento;
     }
 
-    public Integer getNumeroEpisodio() {
-        return numeroEpisodio;
-    }
-
-    public void setNumeroEpisodio(Integer numeroEpisodio) {
-        this.numeroEpisodio = numeroEpisodio;
+    @Override
+    public String toString() {
+        return "Temporada = " + temporada +
+                ", Titulo = '" + titulo + '\'' +
+                ", Avaliação = " + avaliacao +
+                ", dataLançamento = " +dataLancamento;
     }
 }
