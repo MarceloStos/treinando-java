@@ -1,6 +1,5 @@
 package br.com.marcelostosdev.FilmeLibrary.Model;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
