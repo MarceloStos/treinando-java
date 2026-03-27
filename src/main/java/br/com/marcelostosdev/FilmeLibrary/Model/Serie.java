@@ -1,5 +1,6 @@
 package br.com.marcelostosdev.FilmeLibrary.Model;
 
+import br.com.marcelostosdev.FilmeLibrary.Service.ConsultaChatGPT;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.Optional;
@@ -22,6 +23,8 @@ public class Serie{
             this.atores = dadosSerie.atores();
             this.poster = dadosSerie.poster();
             this.sinopse = dadosSerie.sinopse();
+//            this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();
+
         }
 
     public String getTitulo() {
