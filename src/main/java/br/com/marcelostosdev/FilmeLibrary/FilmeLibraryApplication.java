@@ -9,10 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FilmeLibraryApplication implements CommandLineRunner {
-
-	@Autowired
-	private SerieRepository repositorio;
+public class FilmeLibraryApplication {
 
 	public static void main(String[] args) {
 		Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
@@ -23,9 +20,4 @@ public class FilmeLibraryApplication implements CommandLineRunner {
 		SpringApplication.run(FilmeLibraryApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		Principal principal = new Principal(repositorio);
-		principal.exibeMenu();
-	}
 }
